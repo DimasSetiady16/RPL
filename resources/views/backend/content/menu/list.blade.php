@@ -25,6 +25,7 @@
                         <tr>
                             <th>No</th>
                             <th>Nama Menu</th>
+                            <th>Status Menu</th>
                             <th>Aksi</th>
                         </tr>
                         </thead>
@@ -32,15 +33,62 @@
                             @php
                                 $no = 1;
                             @endphp
-                            @foreach ($menu as $row)
+                            @foreach ($menu as $k => $row)
                             <tr>
                                 <td>{{ $no++ }}</td>
-                                <td>{{ $row->nama_menu }}</td>
+                                <td>
+                                    {{ $row->nama_menu }}<br/>
+                                    <ul>
+                                        @foreach ($row->submenu as $key => $sub)
+                                            <li>
+                                                {{ $sub->nama_menu }}
+
+                                                <a href="{{ route('menu.ubah',$row->id_menu) }}"><i class="fa fa-edit"> </i></a>
+                                                <a href="{{ route('menu.ubah',$row->id_menu) }}"><i class="fa fa-trash"> </i></a>
+
+                                                <span>{{( $sub->status_menu == 0 ) ? "(Tidak Aktif)" : ""}}</span>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </td>
+                                <td>{{( $row->status_menu == 1) ? "Aktif" : "Tidak Aktif"}}</td>
                                 <td>
                                     <a href="{{ route('menu.ubah',$row->id_menu) }}" class="btn btn-sm btn-secondary"><i class="fa fa-edit"></i> Ubah</a>
                                     <a href="{{ route('menu.hapus',$row->id_menu) }}" onclick="return confirm('Anda yakin?')" class="btn btn-sm btn-secondary btn-danger"><i class="fa fa-trash"> </i> Hapus</a>
-                                </td>
-                            </tr>
+
+                                    @if($loop->first)
+                                        @php
+                                        $nextKeyMenu = $k + 1;
+                                        $nextIdMenu = $menu->get($nextKeyMenu)->id_menu;
+                                        @endphp
+                                        <a href="{{ route('menu.order',[$row->id_menu, $nextIdMenu]) }}" class="btn btn-sm btn-secondary">
+                                            <i class="fa fa-arrow-down"></i>
+                                        </a>
+                                    @elseif($loop->last)
+                                        @php
+                                            $prevKeyMenu = $k - 1;
+                                            $prevIdMenu = $menu->get($prevKeyMenu)->id_menu;
+                                        @endphp
+                                        <a href="{{ route('menu.order',[$row->id_menu, $prevIdMenu]) }}" class="btn btn-sm btn-secondary">
+                                            <i class="fa fa-arrow-up"></i>
+                                        </a>
+                                     @else
+                                        @php
+                                            $nextKeyMenu = $k + 1;
+                                            $nextIdMenu = $menu->get($nextKeyMenu)->id_menu;
+                                            $prevKeyMenu = $k - 1;
+                                            $prevIdMenu = $menu->get($prevKeyMenu)->id_menu;
+                                        @endphp
+                                        <a href="{{ route('menu.order',[$row->id_menu, $prevIdMenu]) }}" class="btn btn-sm btn-secondary">
+                                            <i class="fa fa-arrow-up"></i>
+                                        </a>
+
+                                        <a href="{{ route('menu.order',[$row->id_menu, $nextIdMenu]) }}" class="btn btn-sm btn-secondary">
+                                            <i class="fa fa-arrow-down"></i>
+                                        </a>
+                                     @endif
+                                   </td>
+                               </tr>
                             @endforeach
                         </tbody>
                     </table>

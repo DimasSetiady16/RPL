@@ -11,4 +11,3 @@ class Page extends Model
     protected $fillable = ["judul_page","isi_page","status_page"];
 
 }
-

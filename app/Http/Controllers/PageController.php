@@ -73,6 +73,6 @@ class PageController extends Controller
             return redirect(route('page.index'))->with('pesan',['success','Berhasil hapus page']);
         }catch (\Exception $e){
             return redirect(route('page.index'))->with('pesan',['danger','Gagal hapus page']);
+        }
     }
-  }
 }

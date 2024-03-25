@@ -65,6 +65,7 @@ Route::group(['middleware' => 'auth:user'], function(){
         Route::get('/menu/ubah/{id}',[App\Http\Controllers\MenuController::class, 'ubah'])->name('menu.ubah');
         Route::post('/menu/prosesUbah',[App\Http\Controllers\MenuController::class, 'prosesUbah'])->name('menu.prosesUbah');
         Route::get('/menu/hapus/{id}',[App\Http\Controllers\MenuController::class, 'hapus'])->name('menu.hapus');
+        Route::get('/menu/order/{idMenu}/{idSwap}',[App\Http\Controllers\MenuController::class, 'order'])->name('menu.order');
     });
 
     Route::get('/Logout',[App\Http\Controllers\AuthController::class, 'Logout'])->name('auth.Logout');

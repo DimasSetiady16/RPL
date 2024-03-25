@@ -74,6 +74,6 @@ class UserController extends Controller
             return redirect(route('user.index'))->with('pesan',['success','Berhasil hapus user']);
         }catch (\Exception $e){
             return redirect(route('user.index'))->with('pesan',['danger','Gagal hapus user']);
+        }
     }
-  }
 }
